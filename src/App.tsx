@@ -1,5 +1,5 @@
-import TodoAddForm from "./components/TodoAddForm/TodoAddForm"
-import TodoListItem from "./components/TodoList/TodoList"
+import TodoAddForm from "./components/TodoAddForm/TodoAddForm";
+import TodoListItem from "./components/TodoList/TodoList";
 
 function App() {
 
@@ -11,4 +11,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

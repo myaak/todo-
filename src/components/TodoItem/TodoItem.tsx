@@ -1,10 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import Todo from "../../store/Todo";
 import { Checkbox, TodoTitle, TodoWrapper } from "./TodoItem.style";
 import TodoItemButtons from "./Buttons";
 import TodoList from "../../store/TodoList";
 import { observer } from "mobx-react";
-import { set } from "mobx";
 
 interface ITodoItem {
   todo: Todo;
@@ -12,7 +11,7 @@ interface ITodoItem {
 }
 
 const TodoItem = observer(({todo, onCheck}: ITodoItem) => {
-  const {id, title, completed} = todo;
+  const {title, completed} = todo;
 
   const [editing, setEditing] = useState<boolean>(false);
   const [newTitle, setNewTitle] = useState<string>(title)

@@ -2,7 +2,6 @@ import { makeAutoObservable } from "mobx";
 import Todo from "./Todo";
 import { ITodo } from "../models/ITodo";
 
-
 class TodoList {
   todos: Todo[] = [
     {
