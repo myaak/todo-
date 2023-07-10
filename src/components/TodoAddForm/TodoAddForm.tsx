@@ -1,21 +1,23 @@
 import { useState } from "react";
 import { Button } from "../Buttons/Buttons.style";
 import { AddForm, AddFormInput } from "./TodoAddForm.style";
-import TodoList from "../../store/TodoList";
 
-const TodoAddForm = () => {
+interface ITodoAddForm {
+  onAdd: (title: string) => void;
+}
+
+const TodoAddForm: React.FC<ITodoAddForm> = ({onAdd}) => {
 
   const [newTitle, setNewTitle] = useState<string>("");
 
   const handleAddTodo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (newTitle === '') return;
-    TodoList.addTodo(newTitle);
+    onAdd(newTitle);
     setNewTitle('');
   }
 
   return (
-    <AddForm onSubmit={handleAddTodo}>
+    <AddForm onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleAddTodo(event)}>
       <AddFormInput value={newTitle} onChange={(e: React.FormEvent<HTMLInputElement>) => setNewTitle(e.currentTarget.value)}></AddFormInput>
       <Button>Add new Todo</Button>
     </AddForm> 

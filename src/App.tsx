@@ -1,12 +1,9 @@
-import TodoAddForm from "./components/TodoAddForm/TodoAddForm";
-import TodoListItem from "./components/TodoList/TodoList";
+import TodoListWrapper from "./components/TodoList/TodoListWrapper";
 
-function App() {
-
+const App = () => {
   return (
     <>
-      <TodoListItem />
-      <TodoAddForm />
+      <TodoListWrapper />
     </>
   )
 }

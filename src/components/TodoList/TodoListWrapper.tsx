@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import Todo from "../../store/Todo";
-import TodoItem from "../TodoItem/TodoItem";
+import TodoListComponent from './TodoListComponent';
+import TodoAddForm from "../TodoAddForm/TodoAddForm";
 import TodoList from "../../store/TodoList";
-import { observer } from "mobx-react";
 import { FilterInput } from './TodoListSearch';
+import { observer } from 'mobx-react';
 
-const TodoListItem: React.FC = observer(() => {
-
+const TodoListWrapper = observer(() => {
   const [filterString, setFilterString] = useState<string>('');
   const [todos, setTodos] = useState<Todo[]>([]);
 
@@ -22,25 +22,25 @@ const TodoListItem: React.FC = observer(() => {
     setTodos(filteredArray);
   }
 
+  const handleAddTodo = (title: string) => {
+    if (title === '') return;
+    TodoList.addTodo(title);
+    handleFilterTodos();
+  }
+
   useEffect(() => {
     handleFilterTodos();
-  }, [filterString])
+  }, [filterString, TodoList.todos]);
 
   return (
-    <div>
+    <>
       <FilterInput value={filterString} onChange={(e: React.FormEvent<HTMLInputElement>) => setFilterString(e.currentTarget.value)}></FilterInput>
-      <ul>
-        {todos.map((todo: Todo, index: number) => (
-          <TodoItem
-            key={index}
-            todo={todo}
-            onCheck={() => TodoList.completeTodo(todo)}
-          />
-        ))  
-        }
-      </ul>
-    </div>
+      <TodoListComponent todos={todos}/>
+      <TodoAddForm 
+        onAdd={(title: string) => handleAddTodo(title)}
+      />
+    </>
   )
 })
 
-export default TodoListItem;
+export default TodoListWrapper;
