@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Todo from "../../store/Todo";
 import { Checkbox, TodoTitle, TodoWrapper } from "./TodoItem.style";
 import TodoItemButtons from "./Buttons";
@@ -10,11 +10,11 @@ interface ITodoItem {
   onCheck: () => void;
 }
 
-const TodoItem = observer(({todo, onCheck}: ITodoItem) => {
+const TodoItem: React.FC<ITodoItem> = observer(({todo, onCheck}) => {
   const {title, completed} = todo;
 
   const [editing, setEditing] = useState<boolean>(false);
-  const [newTitle, setNewTitle] = useState<string>(title)
+  const [newTitle, setNewTitle] = useState<string>('');
 
   const handleSaveResult = () => {
     TodoList.renewTitle({...todo, title: newTitle});
@@ -25,10 +25,14 @@ const TodoItem = observer(({todo, onCheck}: ITodoItem) => {
     TodoList.removeTodo(todo);
   }
 
-  const handleCancelEditing = () => {
+  const handleCancelEditing = useCallback(() => {
     setEditing(false);
     setNewTitle(title);
-  }
+  }, [])
+
+  useEffect(() => {
+    setNewTitle(title);
+  }, [title])
 
   return (
     <TodoWrapper>

@@ -5,7 +5,7 @@ import TodoList from "../../store/TodoList";
 import { observer } from "mobx-react";
 import { FilterInput } from './TodoListSearch';
 
-const TodoListItem = observer(() => {
+const TodoListItem: React.FC = observer(() => {
 
   const [filterString, setFilterString] = useState<string>('');
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -15,6 +15,7 @@ const TodoListItem = observer(() => {
       setTodos(TodoList.todos);
       return;
     }
+
     const filteredArray: Todo[] = 
       TodoList.todos.filter((item: Todo) => item.title.toLowerCase().includes(filterString.toLowerCase()));
 
@@ -23,8 +24,7 @@ const TodoListItem = observer(() => {
 
   useEffect(() => {
     handleFilterTodos();
-  }, [filterString, TodoList.todos])
-
+  }, [filterString])
 
   return (
     <div>
