@@ -17,6 +17,7 @@ const TodoItem: React.FC<ITodoItem> = observer(({todo, onCheck}) => {
   const [newTitle, setNewTitle] = useState<string>('');
 
   const handleSaveResult = () => {
+    if (newTitle === '') return;
     TodoList.renewTitle({...todo, title: newTitle});
     setEditing(false);
   }
@@ -37,7 +38,11 @@ const TodoItem: React.FC<ITodoItem> = observer(({todo, onCheck}) => {
   return (
     <TodoWrapper>
       { editing ? 
-        <input type="text" onChange={(e) => setNewTitle(e.target.value)} value={newTitle}/>
+        <input type="text" 
+          onChange={(e) => setNewTitle(e.target.value)} 
+          value={newTitle}
+          maxLength={25}
+        />
         :
         <>
           <Checkbox checked={completed} onChange={onCheck}></Checkbox>
