@@ -11,7 +11,7 @@ interface ITodoItem {
   onCheck: () => void;
 }
 
-const TodoItem: React.FC<ITodoItem> = ({todo, onCheck}) => {
+const TodoItem: React.FC<ITodoItem> = observer(({todo, onCheck}) => {
   const {title, completed}: Omit<Todo, "id"> = todo;
 
   const [editing, setEditing] = useState<boolean>(false);
@@ -63,6 +63,6 @@ const TodoItem: React.FC<ITodoItem> = ({todo, onCheck}) => {
       />
     </TodoWrapper>
   )
-}
+});
 
 export default React.memo(TodoItem);
