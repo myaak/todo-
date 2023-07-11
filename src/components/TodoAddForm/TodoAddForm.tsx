@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "../Buttons/Buttons.style";
 import { AddForm, AddFormInput } from "./TodoAddForm.style";
+import { observer } from "mobx-react";
 
 interface ITodoAddForm {
   onAdd: (title: string) => void;
@@ -24,4 +25,4 @@ const TodoAddForm: React.FC<ITodoAddForm> = ({onAdd}) => {
   )
 }
 
-export default TodoAddForm;
+export default observer(TodoAddForm);

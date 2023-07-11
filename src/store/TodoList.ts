@@ -34,7 +34,8 @@ class TodoList {
   }
 
   completeTodo({id, completed}: Todo) {
-    this.todos = this.todos.map((item: Todo) => item.id === id ? {...item, completed: !completed} : item);
+    const index = this.todos.findIndex((item: Todo) => item.id === id);
+    this.todos[index].completed = !completed;
   }
 
   renewTitle({id, title}: Todo) {
