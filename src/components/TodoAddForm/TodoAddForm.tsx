@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button } from "../Buttons/Buttons.style";
 import { AddForm, AddFormInput } from "./TodoAddForm.style";
 import { observer } from "mobx-react";
@@ -19,7 +19,12 @@ const TodoAddForm: React.FC<ITodoAddForm> = ({onAdd}) => {
 
   return (
     <AddForm onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleAddTodo(event)}>
-      <AddFormInput value={newTitle} onChange={(e: React.FormEvent<HTMLInputElement>) => setNewTitle(e.currentTarget.value)}></AddFormInput>
+      <AddFormInput
+        value={newTitle}
+        onChange={(e: React.FormEvent<HTMLInputElement>) => setNewTitle(e.currentTarget.value)}
+        maxLength={25}
+      >
+      </AddFormInput>
       <Button>Add new Todo</Button>
     </AddForm> 
   )
