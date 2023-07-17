@@ -7,27 +7,31 @@ interface ITodoAddForm {
   onAdd: (title: string) => void;
 }
 
-const TodoAddForm: React.FC<ITodoAddForm> = ({onAdd}) => {
-
+const TodoAddForm: React.FC<ITodoAddForm> = ({ onAdd }) => {
   const [newTitle, setNewTitle] = useState<string>("");
 
   const handleAddTodo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onAdd(newTitle);
-    setNewTitle('');
-  }
+    setNewTitle("");
+  };
 
   return (
-    <AddForm onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleAddTodo(event)}>
+    <AddForm
+      onSubmit={(event: React.FormEvent<HTMLFormElement>) =>
+        handleAddTodo(event)
+      }
+    >
       <AddFormInput
         value={newTitle}
-        onChange={(e: React.FormEvent<HTMLInputElement>) => setNewTitle(e.currentTarget.value)}
+        onChange={(e: React.FormEvent<HTMLInputElement>) =>
+          setNewTitle(e.currentTarget.value)
+        }
         maxLength={25}
-      >
-      </AddFormInput>
+      ></AddFormInput>
       <Button>Add new Todo</Button>
-    </AddForm> 
-  )
-}
+    </AddForm>
+  );
+};
 
 export default observer(TodoAddForm);

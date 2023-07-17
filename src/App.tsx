@@ -5,7 +5,7 @@ const App = () => {
     <>
       <TodoListWrapper />
     </>
-  )
-}
+  );
+};
 
 export default App;

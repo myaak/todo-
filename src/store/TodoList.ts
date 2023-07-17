@@ -9,14 +9,13 @@ class TodoList {
       title: "mobx",
       completed: false
     }
-  ]
+  ];
 
   constructor() {
     makeAutoObservable(this);
   }
 
   addTodo(title: string) {
-
     let newId = 1;
     if (this.todos.length > 0) {
       newId = this.todos[this.todos.length - 1].id + 1;
@@ -25,21 +24,20 @@ class TodoList {
       id: newId,
       title: title,
       completed: false
-    } 
+    };
     this.todos.push(new Todo(newTodo));
   }
 
-  removeTodo({id}: Todo) {
+  removeTodo({ id }: Todo) {
     this.todos = this.todos.filter((item: Todo) => item.id !== id);
   }
 
-  completeTodo({id, completed}: Todo) {
-    const index = this.todos.findIndex((item: Todo) => item.id === id);
-    this.todos[index].completed = !completed;
+  setTodoCompletedStatus(todo: Todo) {
+    todo.completed = !todo.completed;
   }
 
-  renewTitle({id, title}: Todo) {
-    this.todos = this.todos.map((item: Todo) => item.id === id ? {...item, title: title} : item);
+  changeTodoTitle(todo: Todo, newTitle: string) {
+    todo.title = newTitle;
   }
 }
 

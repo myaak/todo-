@@ -8,11 +8,13 @@ export const TodoWrapper = styled.div`
 `;
 
 export const TodoTitle = styled.div<{ done: string }>`
-  color: ${(props) => 
-    (props.done === "true" ? 'gray' : 'black' )};
-  text-decoration: ${(props) => 
-    (props.done === "true" ? 'line-through #000 !important' : 'none' )};
-
+  color: ${(props) => (props.done === "true" ? "gray" : "black")};
+  text-decoration: ${(props) =>
+    props.done === "true" ? "line-through #000 !important" : "none"};
 `;
 
-export const Checkbox = styled.input.attrs({ type: "checkbox" })``;
+export const Checkbox = styled.input.attrs({ type: "checkbox" })`
+  &:hover {
+    cursor: pointer;
+  }
+`;
