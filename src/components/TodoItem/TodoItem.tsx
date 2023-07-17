@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { FormEvent, useState } from "react";
 import Todo from "../../store/Todo";
 import { Checkbox, TodoTitle, TodoWrapper } from "./TodoItem.style";
 import TodoItemButtons from "./Buttons";
@@ -8,20 +8,17 @@ import { action } from "mobx";
 
 interface ITodoItem {
   todo: Todo;
-  onCheck: () => void;
 }
 
-const TodoItem: React.FC<ITodoItem> = observer(({todo, onCheck}) => {
-  const {title, completed}: Omit<Todo, "id"> = todo;
+const TodoItem: React.FC<ITodoItem> = ({ todo }) => {
+  const { title, completed } = todo;
 
   const [editing, setEditing] = useState<boolean>(false);
-  const [newTitle, setNewTitle] = useState<string>('');
-
-  console.log(`render ${todo.id}, ${todo.title}`);
+  const [newTitle, setNewTitle] = useState<string>(title);
 
   const handleSaveResult = action(() => {
-    if (newTitle === '') return;
-    TodoList.renewTitle({...todo, title: newTitle});
+    if (newTitle === "") return;
+    TodoList.changeTodoTitle(todo, newTitle);
     setEditing(false);
   });
 
@@ -34,35 +31,46 @@ const TodoItem: React.FC<ITodoItem> = observer(({todo, onCheck}) => {
     setNewTitle(title);
   });
 
-  useEffect(() => {
-    setNewTitle(title);
-  }, [title])
+  const handleSetTodoCompletedStatus = action((todo: Todo) => {
+    TodoList.setTodoCompletedStatus(todo);
+  });
+
+  const handleSubmit = action((e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleSaveResult();
+  });
 
   return (
     <TodoWrapper>
-      { editing ? 
-        <input type="text" 
-          onChange={(e) => setNewTitle(e.target.value)} 
-          value={newTitle}
-          maxLength={25}
-        />
-        :
+      {editing ? (
+        <form onSubmit={(e: FormEvent<HTMLFormElement>) => handleSubmit(e)}>
+          <input
+            type="text"
+            onChange={(e) => setNewTitle(e.target.value)}
+            value={newTitle}
+            maxLength={25}
+          />
+        </form>
+      ) : (
         <>
-          <Checkbox checked={completed} onChange={onCheck}></Checkbox>
+          <Checkbox
+            checked={completed}
+            onChange={() => handleSetTodoCompletedStatus(todo)}
+          ></Checkbox>
           <TodoTitle done={String(completed)} onClick={() => setEditing(true)}>
-              {title}
+            {title}
           </TodoTitle>
         </>
-      }
-      <TodoItemButtons 
+      )}
+      <TodoItemButtons
         editing={editing}
         saveResult={handleSaveResult}
         deleteItem={handleDeleteItem}
-        toggleEdit={action(() => setEditing(true))}
+        toggleEdit={() => setEditing(true)}
         cancelEdit={handleCancelEditing}
       />
     </TodoWrapper>
-  )
-});
+  );
+};
 
-export default React.memo(TodoItem);
+export default observer(TodoItem);
