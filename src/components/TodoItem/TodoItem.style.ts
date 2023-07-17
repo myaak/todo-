@@ -11,6 +11,10 @@ export const TodoTitle = styled.div<{ done: string }>`
   color: ${(props) => (props.done === "true" ? "gray" : "black")};
   text-decoration: ${(props) =>
     props.done === "true" ? "line-through #000 !important" : "none"};
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const Checkbox = styled.input.attrs({ type: "checkbox" })`

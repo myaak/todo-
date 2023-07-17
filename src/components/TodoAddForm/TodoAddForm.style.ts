@@ -7,7 +7,7 @@ export const AddForm = styled.form`
   padding: 15px;
 `;
 
-export const AddFormInput = styled.input.attrs({type: "text"})`
+export const AddFormInput = styled.input.attrs({ type: "text" })`
   width: 250px;
   padding: 5px;
   border-radius: 10px;
