@@ -25,7 +25,7 @@ class TodoList {
       title: title,
       completed: false
     };
-    this.todos.push(new Todo(newTodo));
+    this.todos = [...this.todos, newTodo];
   }
 
   removeTodo({ id }: Todo) {

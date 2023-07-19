@@ -1,3 +1,4 @@
+import React from "react";
 import { Button } from "../Buttons/Buttons.style";
 
 interface ITodoItemButtons {
@@ -8,13 +9,7 @@ interface ITodoItemButtons {
   cancelEdit: () => void;
 }
 
-const TodoItemButtons: React.FC<ITodoItemButtons> = ({
-  editing,
-  saveResult,
-  toggleEdit,
-  deleteItem,
-  cancelEdit
-}) => {
+const TodoItemButtons: React.FC<ITodoItemButtons> = ({ editing, saveResult, toggleEdit, deleteItem, cancelEdit }) => {
   return editing ? (
     <>
       <Button onClick={saveResult}>Save</Button>
@@ -28,4 +23,4 @@ const TodoItemButtons: React.FC<ITodoItemButtons> = ({
   );
 };
 
-export default TodoItemButtons;
+export default React.memo(TodoItemButtons);

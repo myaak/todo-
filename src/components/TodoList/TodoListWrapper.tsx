@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Todo from "../../store/Todo";
 import TodoListComponent from "./TodoListComponent";
 import TodoAddForm from "../TodoAddForm/TodoAddForm";
@@ -9,29 +9,23 @@ import { action } from "mobx";
 
 const TodoListWrapper = () => {
   const [filterString, setFilterString] = useState<string>("");
-  const [todos, setTodos] = useState<Todo[]>(TodoList.todos);
+  const [todos, setTodos] = useState<Todo[]>([]);
 
-  const handleFilterTodos = action(() => {
-    if (filterString === "") {
-      setTodos(TodoList.todos);
-      return;
-    }
-
-    const filteredTodos: Todo[] = TodoList.todos.filter((item: Todo) =>
-      item.title.toLowerCase().includes(filterString.toLowerCase())
-    );
-
-    setTodos(filteredTodos);
-  });
+  const filteredTodos: Todo[] = useMemo(
+    () =>
+      filterString === ""
+        ? TodoList.todos
+        : TodoList.todos.filter((item: Todo) => item.title.toLowerCase().includes(filterString.toLowerCase())),
+    [filterString, TodoList.todos]
+  );
 
   const handleAddTodo = action((title: string) => {
     if (title === "") return;
     TodoList.addTodo(title);
-    handleFilterTodos();
   });
 
   useEffect(() => {
-    handleFilterTodos();
+    setTodos(filteredTodos);
   }, [filterString, TodoList.todos]);
 
   return (
