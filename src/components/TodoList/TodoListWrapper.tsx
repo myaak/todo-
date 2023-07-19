@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Todo from "../../store/Todo";
 import TodoListComponent from "./TodoListComponent";
 import TodoAddForm from "../TodoAddForm/TodoAddForm";
@@ -9,7 +9,6 @@ import { action } from "mobx";
 
 const TodoListWrapper = () => {
   const [filterString, setFilterString] = useState<string>("");
-  const [todos, setTodos] = useState<Todo[]>([]);
 
   const filteredTodos: Todo[] = useMemo(
     () =>
@@ -24,10 +23,6 @@ const TodoListWrapper = () => {
     TodoList.addTodo(title);
   });
 
-  useEffect(() => {
-    setTodos(filteredTodos);
-  }, [filterString, TodoList.todos]);
-
   return (
     <>
       <FilterInput
@@ -36,7 +31,7 @@ const TodoListWrapper = () => {
           setFilterString(e.currentTarget.value);
         }}
       ></FilterInput>
-      <TodoListComponent todos={todos} />
+      <TodoListComponent todos={filteredTodos} />
       <TodoAddForm onAdd={(title: string) => handleAddTodo(title)} />
     </>
   );
